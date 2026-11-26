@@ -36,7 +36,7 @@ ORDEN = ["block", "cyclic", "lpt"]
 
 def leer_tiempos(ruta: Path) -> dict[tuple[str, int], list[dict]]:
     grupos: dict[tuple[str, int], list[dict]] = defaultdict(list)
-    with open(ruta, newline="") as f:
+    with open(ruta, newline="", encoding="utf-8") as f:
         for fila in csv.DictReader(f):
             grupos[(fila["estrategia"], int(fila["p"]))].append(fila)
     return grupos
@@ -65,7 +65,7 @@ def tabla(grupos) -> list[dict]:
 
 
 def escribir_tabla(filas, salida: Path) -> None:
-    with open(salida / "tabla.csv", "w", newline="") as f:
+    with open(salida / "tabla.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(filas[0].keys()))
         w.writeheader()
         w.writerows(filas)
@@ -74,7 +74,7 @@ def escribir_tabla(filas, salida: Path) -> None:
     for r in filas:
         lineas.append(f"| {r['estrategia']} | {r['p']} | {r['T_s']:.2f} | {r['T_desv_s']:.2f} | "
                       f"{r['S'] or '—'} | {r['E'] or '—'} | {r['f'] if r['f'] != '' else '—'} | {r['I']} |")
-    (salida / "tabla.md").write_text("\n".join(lineas) + "\n")
+    (salida / "tabla.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
 
 
 def graficas(filas, salida: Path, titulo: str) -> None:
@@ -126,7 +126,7 @@ def pearson(x, y) -> float:
 
 
 def detalle(dir_corrida: Path, dir_barrido: Path | None, salida: Path) -> None:
-    with open(dir_corrida / "resultados.csv", newline="") as f:
+    with open(dir_corrida / "resultados.csv", newline="", encoding="utf-8") as f:
         ok = [r for r in csv.DictReader(f) if r["estado"] == "ok"]
     kb = [int(r["bytes"]) / 1024 for r in ok]
     mp = [float(r["megapixeles"]) for r in ok]
@@ -163,7 +163,7 @@ def detalle(dir_corrida: Path, dir_barrido: Path | None, salida: Path) -> None:
             corridas = sorted(dir_barrido.glob(f"*-{e}-p1-r1.json"))
             if not corridas:
                 continue
-            s = json.loads(corridas[0].read_text())
+            s = json.loads(corridas[0].read_text(encoding="utf-8"))
             tareas = sorted(s["por_tarea"], key=lambda t: t["indice"])
             lineas.append(f"## {e} (corrida {corridas[0].stem}, I = {s['desbalance_I']})\n")
             lineas.append("| Índice | Fotos | MiB | MP totales | t_i [s] |")
@@ -173,7 +173,7 @@ def detalle(dir_corrida: Path, dir_barrido: Path | None, salida: Path) -> None:
             for t in tareas:
                 csv_parte = parte_dir / f"part-{t['indice']:04d}.csv"
                 if csv_parte.exists():
-                    with open(csv_parte, newline="") as f:
+                    with open(csv_parte, newline="", encoding="utf-8") as f:
                         mp_tarea[t["indice"]] = sum(
                             float(r["megapixeles"]) for r in csv.DictReader(f) if r["estado"] == "ok")
             for t in tareas:
@@ -185,7 +185,7 @@ def detalle(dir_corrida: Path, dir_barrido: Path | None, salida: Path) -> None:
                           f"{lento['fotos']} fotos). Más rápido: índice {rapido['indice']} "
                           f"({rapido['t_computo_s']:.2f} s, {rapido['fotos']} fotos).\n")
     del por_foto
-    (salida / "detalle.md").write_text("\n".join(lineas) + "\n")
+    (salida / "detalle.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
 
 
 def main() -> None:
@@ -204,7 +204,7 @@ def main() -> None:
     graficas(filas, a.salida, a.titulo)
     if a.detalle:
         detalle(a.detalle, a.barrido, a.salida)
-    print((a.salida / "tabla.md").read_text())
+    print((a.salida / "tabla.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
