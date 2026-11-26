@@ -1,0 +1,4 @@
+# Dependencias del host para merge.py y analyze.py (el worker usa app/requirements.txt)
+numpy>=1.26
+pillow>=10.0
+matplotlib>=3.8

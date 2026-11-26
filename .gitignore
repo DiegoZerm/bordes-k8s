@@ -1,0 +1,9 @@
+# Las fotos no se suben: se descargan con scripts/descargar-datos.sh
+datos/
+__pycache__/
+*.pyc
+.venv/
+docs/reporte/*.aux
+docs/reporte/*.log
+docs/reporte/*.out
+docs/reporte/*.toc
