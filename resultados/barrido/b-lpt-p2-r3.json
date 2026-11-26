@@ -1,0 +1,132 @@
+{
+  "partes": 16,
+  "partes_esperadas": 16,
+  "completo": true,
+  "estrategia": "lpt",
+  "fotos": 7390,
+  "errores": 0,
+  "t_computo_total_s": 71.0201,
+  "t_max_s": 5.29,
+  "t_min_s": 3.8025,
+  "t_promedio_s": 4.4388,
+  "desbalance_I": 1.1918,
+  "tareas_por_nodo": {
+    "bordes-worker": 6,
+    "bordes-worker3": 8,
+    "bordes-worker2": 2
+  },
+  "por_tarea": [
+    {
+      "indice": 0,
+      "nodo": "bordes-worker",
+      "fotos": 459,
+      "bytes": 49534212,
+      "t_computo_s": 4.3957
+    },
+    {
+      "indice": 1,
+      "nodo": "bordes-worker3",
+      "fotos": 460,
+      "bytes": 49538371,
+      "t_computo_s": 4.4908
+    },
+    {
+      "indice": 2,
+      "nodo": "bordes-worker",
+      "fotos": 461,
+      "bytes": 49538509,
+      "t_computo_s": 4.2154
+    },
+    {
+      "indice": 3,
+      "nodo": "bordes-worker3",
+      "fotos": 462,
+      "bytes": 49538263,
+      "t_computo_s": 3.8025
+    },
+    {
+      "indice": 4,
+      "nodo": "bordes-worker3",
+      "fotos": 461,
+      "bytes": 49534196,
+      "t_computo_s": 4.6289
+    },
+    {
+      "indice": 5,
+      "nodo": "bordes-worker",
+      "fotos": 461,
+      "bytes": 49534251,
+      "t_computo_s": 4.595
+    },
+    {
+      "indice": 6,
+      "nodo": "bordes-worker3",
+      "fotos": 463,
+      "bytes": 49538127,
+      "t_computo_s": 4.4938
+    },
+    {
+      "indice": 7,
+      "nodo": "bordes-worker",
+      "fotos": 462,
+      "bytes": 49534171,
+      "t_computo_s": 4.5066
+    },
+    {
+      "indice": 8,
+      "nodo": "bordes-worker3",
+      "fotos": 463,
+      "bytes": 49537535,
+      "t_computo_s": 4.9946
+    },
+    {
+      "indice": 9,
+      "nodo": "bordes-worker",
+      "fotos": 463,
+      "bytes": 49538948,
+      "t_computo_s": 5.29
+    },
+    {
+      "indice": 10,
+      "nodo": "bordes-worker3",
+      "fotos": 462,
+      "bytes": 49534143,
+      "t_computo_s": 4.5006
+    },
+    {
+      "indice": 11,
+      "nodo": "bordes-worker2",
+      "fotos": 462,
+      "bytes": 49534182,
+      "t_computo_s": 4.3191
+    },
+    {
+      "indice": 12,
+      "nodo": "bordes-worker3",
+      "fotos": 463,
+      "bytes": 49538330,
+      "t_computo_s": 3.8736
+    },
+    {
+      "indice": 13,
+      "nodo": "bordes-worker",
+      "fotos": 463,
+      "bytes": 49537937,
+      "t_computo_s": 3.8609
+    },
+    {
+      "indice": 14,
+      "nodo": "bordes-worker3",
+      "fotos": 462,
+      "bytes": 49534247,
+      "t_computo_s": 4.4871
+    },
+    {
+      "indice": 15,
+      "nodo": "bordes-worker2",
+      "fotos": 463,
+      "bytes": 49538374,
+      "t_computo_s": 4.5655
+    }
+  ]
+}
