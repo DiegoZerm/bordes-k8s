@@ -7,3 +7,8 @@ docs/reporte/*.aux
 docs/reporte/*.log
 docs/reporte/*.out
 docs/reporte/*.toc
+# La imagen exportada (70 MB) se pasa por Drive o USB, no por git
+examen/imagen/
+examen/reporte/*.aux
+examen/reporte/*.log
+examen/reporte/*.out

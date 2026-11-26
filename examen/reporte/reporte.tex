@@ -1,0 +1,146 @@
+\documentclass[11pt,a4paper]{article}
+\newcommand{\tipodoc}{Reporte del examen}
+\input{../../docs/reporte/preambulo}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{xurl}
+\setmonofont{DejaVu Sans Mono}[Scale=0.8]
+\geometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
+\setstretch{1.02}
+\setlength{\parskip}{0.35em}
+\graphicspath{{../resultados/}}
+\hypersetup{pdftitle={Examen HPC: detección de bordes en un clúster real}}
+\fancyhead[L]{\small\color{upqazul}Examen HPC · Detección de bordes en un clúster real}
+
+% Dato que todavía falta: sale en rojo para que no se escape ninguno
+\newcommand{\pend}[1]{\ifmmode\mbox{\color{upqrojo}\bfseries[#1]}\else{\color{upqrojo}\bfseries[#1]}\fi}
+% Datos del día del examen que se escriben a mano
+\newcommand{\red}{\pend{red del hotspot}}
+\newcommand{\fechaExamen}{\pend{fecha del examen}}
+% Todo lo demás lo escribe llenar.py
+\input{datos}
+
+\begin{document}
+\thispagestyle{plain}
+{\color{upqazul}\rule{\linewidth}{1.2pt}}\par
+\vspace{0.1cm}
+{\LARGE\bfseries\color{upqazul} Detección de bordes por lotes en un clúster real de 3 laptops\par}
+\vspace{0.1cm}
+{\large Examen de Cómputo de Alto Rendimiento · Ruta A (k3s en laptops) · Equipo 5, Oxford-IIIT Pet\par}
+\vspace{0.05cm}
+{\small Diego Cortes Zermeño (124048766) · Irving Nahir Ferrusca Jaimez (124048614) · César Iván Ramírez Castañon (124051715) · Axel Miguel Quevedo Barrios (124051378)\\
+Docente: Javier Moya · \fechaExamen\ · \url{https://github.com/DiegoZerm/bordes-k8s} (carpeta \texttt{examen/})\par}
+{\color{upqrojo}\rule{\linewidth}{0.6pt}}\par
+
+% ---------------------------------------------------------------- 1
+\section{El clúster}
+
+Es el mismo proyecto que corrimos en kind, con el mismo código de \texttt{app/} y las mismas 7,390 fotos, pero ahora sobre tres máquinas físicas. Las tres laptops se conectaron al hotspot de un celular (red \red), porque la red de la universidad aísla los equipos entre sí.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Nodos del clúster. La salida de \texttt{kubectl get nodes -o wide} está en \texttt{evidencias/01-nodos.txt}.}
+\begin{tabular}{@{}llllr@{}}
+\toprule
+Nodo & Rol & CPU & Núcleos / hilos & RAM\\
+\midrule
+\texttt{lider-diego} & control-plane, NFS y worker & AMD Ryzen 5 3550H & 4 / 8 & 22 GB\\
+\texttt{worker-irving} & worker & AMD Ryzen 7 7435HS & 8 / 16 & 15 GB\\
+\texttt{worker-cesar} & worker & Intel Core i5-8365U & 4 / 8 & 30 GB\\
+\midrule
+\multicolumn{3}{@{}l}{Total} & 16 / 32 & 67 GB\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \textbf{Kubernetes:} k3s v1.37.2 con flannel (VXLAN). El líder corre el servidor y además recibe pods. Los workers se unen con \texttt{examen/unir-worker.sh}, que primero monta el NFS a mano para comprobar que llega.
+\item \textbf{Datos:} el líder exporta \texttt{/srv/datos} por NFSv4. Un PersistentVolume \texttt{ReadWriteMany} y su PVC \texttt{datos} (Bound) lo montan en \texttt{/data} de cada pod. Las fotos se leen por red y cada tarea escribe ahí su \texttt{part-XXXX.csv}. Se usa \texttt{all\_squash} con uid 1000, el mismo usuario del contenedor.
+\item \textbf{Imagen:} \texttt{ghcr.io/diegozerm/bordes:1.0}, construida para amd64 y arm64 con \texttt{docker buildx} y publicada en GitHub Container Registry. En kind la cargábamos con \texttt{kind load}.
+\item \textbf{Job:} el mismo Job indexado (16 tareas, 1~CPU por pod, \texttt{backoffLimitPerIndex: 2}). Agrega \texttt{topologySpreadConstraints} por nodo, con \texttt{maxSkew: 1}, para que los pods se repartan entre las tres laptops. También agrega una regla \texttt{podFailurePolicy} para que un pod expulsado al drenar un nodo no cuente como fallo.
+\end{itemize}
+
+% ---------------------------------------------------------------- 2
+\section{kind contra el clúster}
+
+Repetimos el barrido con \texttt{block} y \texttt{lpt}, 16 tareas y 3 repeticiones, ahora hasta $p=\pmaxClu$ porque el clúster tiene más núcleos. $T(p)$ es el tiempo de pared del Job según Kubernetes. Lo calculamos con el mismo \texttt{analyze.py}, y \texttt{comparar.py} pone las dos curvas en la misma figura.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Promedio de 3 repeticiones. k = kind en una laptop; c = clúster de 3 laptops. Las fotos por segundo son $7{,}390 / T(p)$.}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
+\toprule
+& & \multicolumn{2}{c}{$T(p)$ [s]} & \multicolumn{2}{c}{$S(p)$} & \multicolumn{2}{c}{$E(p)$} & \multicolumn{2}{c}{fotos/s}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+Estrategia & $p$ & k & c & k & c & k & c & k & c\\
+\midrule
+\filasComparacion
+\bottomrule
+\end{tabular}
+\end{table}
+
+\IfFileExists{../resultados/comparacion.png}{%
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{comparacion.png}
+\caption{Tiempo, speedup y eficiencia. Línea punteada: kind. Línea continua: clúster.}
+\end{figure}}{\begin{center}\pend{figura comparacion.png: correr examen/comparar.py}\end{center}}
+
+\textbf{¿Escala mejor o peor?} En kind el mejor speedup fue $S=\mejorSKind$, con $p=\mejorPKind$ (\mejorEKind). En el clúster llegó a $S=\mejorSClu$, con $p=\mejorPClu$ (\mejorEClu). Con $p=4$ los dos van parejos (\Scuatro), porque a esa escala todavía sobran núcleos en ambos. La diferencia aparece después: kind se atora al pasar de 4 pods porque la laptop solo tiene 4 núcleos físicos. \pend{completar con los datos: hasta qué p sigue subiendo el clúster y dónde se aplana}.
+
+\textbf{Fotos por segundo.} kind llegó a \fpsKind\ fotos/s ($T=\mejorTKind$~s con $p=\fpsPKind$) y el clúster a \fpsClu\ fotos/s ($T=\mejorTClu$~s con $p=\fpsPClu$), es decir, \vecesFps\ veces más. $T(1)$ fue \TunoKind~s en kind y \TunoClu~s en el clúster. Con un solo pod, la diferencia la ponen el nodo que tocó y la lectura por NFS.
+
+\textbf{Fracción serial.} Con $p \le 4$, Amdahl da $f \approx \fSerialKind$ en kind y $f \approx \fSerialClu$ en el clúster. \pend{completar: si f sube con p alto, es saturación o arranque, no código serial}.
+
+% ---------------------------------------------------------------- 3
+\section{¿Dónde está el cuello de botella: CPU, red o NFS?}
+
+Cada tarea mide por separado los milisegundos de cada foto, y en esa medida va incluida la lectura del archivo. Así podemos separar el cómputo del resto del tiempo de pared.
+
+\begin{table}[H]
+\centering
+\small
+\begin{minipage}[t]{0.33\linewidth}\centering
+\caption{ms por foto según $p$ (promedio de block y lpt).}
+\begin{tabular}{@{}rrr@{}}
+\toprule
+$p$ & kind & clúster\\
+\midrule
+\filasCosto
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.62\linewidth}\centering
+\caption{ms por foto en cada nodo, con $p=1$ (sin competencia) y con $p=\pmaxClu$, y tareas que recibió cada nodo con $p=\pmaxClu$ (las 6 corridas).}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Nodo & ms ($p=1$) & ms ($p=\pmaxClu$) & tareas\\
+\midrule
+\filasNodos
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{enumerate}
+\item \textbf{CPU.} En kind, el costo por foto pasó de \msUnoKind~ms con $p=1$ a \msMaxKind~ms con $p=8$: los pods se pelean por 4 núcleos físicos. En el clúster quedó en \msUnoClu~ms con $p=1$ y \msMaxClu~ms con $p=\pmaxClu$. \pend{completar: a partir de qué p sube, y si coincide con los núcleos físicos de cada laptop (4, 8 y 4)}.
+\item \textbf{NFS y red.} Con $p=1$ no hay competencia por CPU. Si el NFS pesara, el costo por foto en un worker remoto sería claramente mayor que en el líder, que lee su propio disco. \pend{completar con la tabla por nodo: diferencia entre lider-diego y los workers, y si se explica por la CPU de cada laptop}. Las 7,390 fotos pesan 775~MB, así que leerlas todas en, por ejemplo, 20~s exige unos 39~MB/s. Eso ya se acerca a lo que da el Wi-Fi de un hotspot, que suele quedar entre 5 y 40~MB/s según la señal.
+\item \textbf{Arranque de pods.} En kind, el \arranqueKind\,\% de $T(1)$ no era cómputo sino arrancar pods. En el clúster fue el \arranqueClu\,\%. Un pod en un nodo que ya tiene la imagen tardó \arranqueCaliente~s en arrancar, y en un nodo sin ella \arranqueFrio~s, de los que \descarga~s fueron la descarga desde GHCR por el hotspot (\texttt{examen/arranque.sh}). Ese costo se paga una sola vez por nodo.
+\end{enumerate}
+
+\textbf{Conclusión del cuello de botella:} \pend{completar: CPU, red o NFS, con el número que lo demuestra}.
+
+% ---------------------------------------------------------------- 4
+\section{Tolerancia a fallos: drenar un nodo a mitad del Job}
+
+Lanzamos 4 tareas largas con 4 en paralelo y, a mitad de la corrida, \texttt{kubectl drain \drenNodo}. El drenado expulsó \drenExpulsados\ pod(s) que estaban corriendo (índices: \drenIndices). Como la expulsión trae la condición \texttt{DisruptionTarget}, la regla \texttt{podFailurePolicy: Ignore} hace que no cuente contra \texttt{backoffLimitPerIndex}. El controlador del Job creó esos índices de nuevo en los nodos que quedaban, y el Job terminó con \texttt{completedIndexes=\drenCompletos} y \texttt{failedIndexes}: \drenFallidos. Los índices que ya habían terminado no se repitieron, porque su \texttt{part-XXXX.csv} ya estaba en el NFS. La salida completa está en \texttt{evidencias/04-drenado/drenado.txt}.
+
+Si una laptop se apaga en vez de drenarse, el nodo pasa a \texttt{NotReady} y los pods se quedan en \texttt{Terminating}, porque su kubelet ya no responde. Para que el Job los reponga hay que marcar el nodo con el taint \texttt{node.kubernetes.io/out-of-service}.
+
+% ---------------------------------------------------------------- 5
+\section*{Conclusiones}
+\pend{completar con los datos reales: (1) cuánto más rápido fue el clúster y con qué p; (2) qué lo limita; (3) qué cambiaríamos: menos tareas más grandes para amortizar el arranque, LPT por megapíxeles y la red por cable en vez del hotspot}.
+
+\end{document}
