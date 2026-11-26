@@ -24,7 +24,7 @@ COLOR = {"block": "#1f77b4", "lpt": "#2ca02c"}
 
 
 def leer(ruta: Path) -> list[dict]:
-    with open(ruta, newline="") as f:
+    with open(ruta, newline="", encoding="utf-8") as f:
         return [r for r in csv.DictReader(f) if r["estrategia"] in COLOR]
 
 
@@ -77,7 +77,7 @@ def main() -> None:
 
             lineas.append(f"| {e} | {p} | {v(k, 'T_s')} | {v(c, 'T_s')} | {v(k, 'S')} | "
                           f"{v(c, 'S')} | {v(k, 'E')} | {v(c, 'E')} | {fps(k)} | {fps(c)} |")
-    (salida / "comparacion.md").write_text("\n".join(lineas) + "\n")
+    (salida / "comparacion.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
     print("\n".join(lineas))
 
 
