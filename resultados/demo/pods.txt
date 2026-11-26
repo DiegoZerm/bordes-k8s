@@ -1,0 +1,9 @@
+NAME                         READY   STATUS      RESTARTS   AGE   IP           NODE             NOMINATED NODE   READINESS GATES   JOB-COMPLETION-INDEX
+bordes-demo-234933-0-zdttm   0/1     Completed   0          11s   10.244.1.2   bordes-worker3   <none>           <none>            0
+bordes-demo-234933-1-gtzwd   0/1     Completed   0          11s   10.244.3.2   bordes-worker2   <none>           <none>            1
+bordes-demo-234933-2-trp84   0/1     Completed   0          11s   10.244.2.2   bordes-worker    <none>           <none>            2
+bordes-demo-234933-3-kfskx   0/1     Completed   0          11s   10.244.1.3   bordes-worker3   <none>           <none>            3
+bordes-demo-234933-4-tnhnl   0/1     Completed   0          6s    10.244.1.4   bordes-worker3   <none>           <none>            4
+bordes-demo-234933-5-4lvnk   0/1     Completed   0          6s    10.244.3.3   bordes-worker2   <none>           <none>            5
+bordes-demo-234933-6-vzqc6   0/1     Completed   0          6s    10.244.2.3   bordes-worker    <none>           <none>            6
+bordes-demo-234933-7-xk9zl   0/1     Completed   0          6s    10.244.1.5   bordes-worker3   <none>           <none>            7

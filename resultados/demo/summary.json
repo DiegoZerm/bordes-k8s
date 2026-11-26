@@ -1,0 +1,76 @@
+{
+  "partes": 8,
+  "partes_esperadas": 8,
+  "completo": true,
+  "estrategia": "lpt",
+  "fotos": 400,
+  "errores": 0,
+  "t_computo_total_s": 5.661,
+  "t_max_s": 0.8436,
+  "t_min_s": 0.6023,
+  "t_promedio_s": 0.7076,
+  "desbalance_I": 1.1922,
+  "tareas_por_nodo": {
+    "bordes-worker3": 4,
+    "bordes-worker2": 2,
+    "bordes-worker": 2
+  },
+  "por_tarea": [
+    {
+      "indice": 0,
+      "nodo": "bordes-worker3",
+      "fotos": 49,
+      "bytes": 4200030,
+      "t_computo_s": 0.6765
+    },
+    {
+      "indice": 1,
+      "nodo": "bordes-worker2",
+      "fotos": 49,
+      "bytes": 4195028,
+      "t_computo_s": 0.8436
+    },
+    {
+      "indice": 2,
+      "nodo": "bordes-worker",
+      "fotos": 51,
+      "bytes": 4199929,
+      "t_computo_s": 0.8311
+    },
+    {
+      "indice": 3,
+      "nodo": "bordes-worker3",
+      "fotos": 50,
+      "bytes": 4193904,
+      "t_computo_s": 0.6326
+    },
+    {
+      "indice": 4,
+      "nodo": "bordes-worker3",
+      "fotos": 50,
+      "bytes": 4194542,
+      "t_computo_s": 0.6023
+    },
+    {
+      "indice": 5,
+      "nodo": "bordes-worker2",
+      "fotos": 50,
+      "bytes": 4194752,
+      "t_computo_s": 0.6495
+    },
+    {
+      "indice": 6,
+      "nodo": "bordes-worker",
+      "fotos": 50,
+      "bytes": 4194824,
+      "t_computo_s": 0.7356
+    },
+    {
+      "indice": 7,
+      "nodo": "bordes-worker3",
+      "fotos": 51,
+      "bytes": 4199817,
+      "t_computo_s": 0.6898
+    }
+  ]
+}

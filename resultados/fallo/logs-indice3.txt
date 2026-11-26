@@ -1,0 +1,5 @@
+== pod/bordes-fallo-indice3-3-6z56s
+[3] Reintento después del fallo provocado
+[3] 25 fotos en 0.33 s en bordes-worker3 (0 errores)
+== pod/bordes-fallo-indice3-3-vwnlk
+[3] Fallo provocado en el primer intento
