@@ -1,0 +1,18 @@
+NAME                            READY   STATUS      RESTARTS   AGE   IP            NODE             NOMINATED NODE   READINESS GATES   JOB-COMPLETION-INDEX
+bordes-fallo-indice3-0-flvv7    0/1     Completed   0          22s   10.244.1.6    bordes-worker3   <none>           <none>            0
+bordes-fallo-indice3-1-ndxrz    0/1     Completed   0          22s   10.244.3.4    bordes-worker2   <none>           <none>            1
+bordes-fallo-indice3-10-s7mvn   0/1     Completed   0          10s   10.244.2.7    bordes-worker    <none>           <none>            10
+bordes-fallo-indice3-11-b5dvn   0/1     Completed   0          10s   10.244.1.11   bordes-worker3   <none>           <none>            11
+bordes-fallo-indice3-12-2z7bp   0/1     Completed   0          9s    10.244.3.7    bordes-worker2   <none>           <none>            12
+bordes-fallo-indice3-13-v4jg8   0/1     Completed   0          6s    10.244.1.12   bordes-worker3   <none>           <none>            13
+bordes-fallo-indice3-14-78k98   0/1     Completed   0          6s    10.244.1.13   bordes-worker3   <none>           <none>            14
+bordes-fallo-indice3-15-h7ddb   0/1     Completed   0          6s    10.244.2.8    bordes-worker    <none>           <none>            15
+bordes-fallo-indice3-2-wzgk9    0/1     Completed   0          22s   10.244.2.4    bordes-worker    <none>           <none>            2
+bordes-fallo-indice3-3-6z56s    0/1     Completed   0          10s   10.244.1.10   bordes-worker3   <none>           <none>            3
+bordes-fallo-indice3-3-vwnlk    0/1     Error       0          22s   10.244.1.7    bordes-worker3   <none>           <none>            3
+bordes-fallo-indice3-4-8scs8    0/1     Completed   0          18s   10.244.1.8    bordes-worker3   <none>           <none>            4
+bordes-fallo-indice3-5-bn85d    0/1     Completed   0          18s   10.244.2.5    bordes-worker    <none>           <none>            5
+bordes-fallo-indice3-6-cfg84    0/1     Completed   0          17s   10.244.3.5    bordes-worker2   <none>           <none>            6
+bordes-fallo-indice3-7-pz6qb    0/1     Completed   0          14s   10.244.1.9    bordes-worker3   <none>           <none>            7
+bordes-fallo-indice3-8-74jkt    0/1     Completed   0          14s   10.244.2.6    bordes-worker    <none>           <none>            8
+bordes-fallo-indice3-9-tp6dc    0/1     Completed   0          13s   10.244.3.6    bordes-worker2   <none>           <none>            9

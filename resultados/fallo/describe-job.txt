@@ -1,0 +1,67 @@
+Name:               bordes-fallo-indice3
+Namespace:          default
+Selector:           batch.kubernetes.io/controller-uid=626ec55a-04a1-4883-8a1c-e4620b3e91fa
+Labels:             app=bordes
+                    corrida=fallo-indice3
+Annotations:        <none>
+Parallelism:        4
+Completions:        16
+Completion Mode:    Indexed
+Suspend:            false
+Backoff Limit:      2147483647
+Start Time:         Wed, 25 Nov 2026 23:49:49 -0600
+Completed At:       Wed, 25 Nov 2026 23:50:10 -0600
+Duration:           21s
+Pods Statuses:      0 Active (0 Ready) / 16 Succeeded / 1 Failed
+Completed Indexes:  0-15
+Pod Template:
+  Labels:  app=bordes
+           batch.kubernetes.io/controller-uid=626ec55a-04a1-4883-8a1c-e4620b3e91fa
+           batch.kubernetes.io/job-name=bordes-fallo-indice3
+           controller-uid=626ec55a-04a1-4883-8a1c-e4620b3e91fa
+           corrida=fallo-indice3
+           job-name=bordes-fallo-indice3
+  Containers:
+   worker:
+    Image:      bordes:1.0
+    Port:       <none>
+    Host Port:  <none>
+    Limits:
+      cpu:     1
+      memory:  512Mi
+    Requests:
+      cpu:     1
+      memory:  256Mi
+    Environment:
+      TAREAS:          16
+      ESTRATEGIA:      block
+      ENTRADA:         /data/entrada/images
+      SALIDA:          /data/salida/fallo-indice3
+      LIMITE:          400
+      GUARDAR_BORDES:  0
+      FALLAR_INDICE:   3
+      NODE_NAME:        (v1:spec.nodeName)
+      POD_NAME:         (v1:metadata.name)
+    Mounts:
+      /data from datos (rw)
+  Volumes:
+   datos:
+    Type:          HostPath (bare host directory volume)
+    Path:          /data
+    HostPathType:  Directory
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type    Reason            Age               From            Message
+  ----    ------            ----              ----            -------
+  Normal  SuccessfulCreate  22s               job-controller  Created pod: bordes-fallo-indice3-0-flvv7
+  Normal  SuccessfulCreate  22s               job-controller  Created pod: bordes-fallo-indice3-2-wzgk9
+  Normal  SuccessfulCreate  22s               job-controller  Created pod: bordes-fallo-indice3-1-ndxrz
+  Normal  SuccessfulCreate  22s               job-controller  Created pod: bordes-fallo-indice3-3-vwnlk
+  Normal  SuccessfulCreate  18s               job-controller  Created pod: bordes-fallo-indice3-4-8scs8
+  Normal  SuccessfulCreate  18s               job-controller  Created pod: bordes-fallo-indice3-5-bn85d
+  Normal  SuccessfulCreate  17s               job-controller  Created pod: bordes-fallo-indice3-6-cfg84
+  Normal  SuccessfulCreate  14s               job-controller  Created pod: bordes-fallo-indice3-7-pz6qb
+  Normal  SuccessfulCreate  14s               job-controller  Created pod: bordes-fallo-indice3-8-74jkt
+  Normal  SuccessfulCreate  6s (x8 over 13s)  job-controller  (combined from similar events): Created pod: bordes-fallo-indice3-14-78k98
+  Normal  Completed         1s                job-controller  Job completed

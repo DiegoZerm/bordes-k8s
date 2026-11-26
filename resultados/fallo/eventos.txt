@@ -1,0 +1,12 @@
+LAST SEEN   TYPE     REASON             OBJECT                     MESSAGE
+22s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-0-flvv7
+22s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-2-wzgk9
+22s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-1-ndxrz
+22s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-3-vwnlk
+18s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-4-8scs8
+18s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-5-bn85d
+17s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-6-cfg84
+14s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-7-pz6qb
+14s         Normal   SuccessfulCreate   job/bordes-fallo-indice3   Created pod: bordes-fallo-indice3-8-74jkt
+6s          Normal   SuccessfulCreate   job/bordes-fallo-indice3   (combined from similar events): Created pod: bordes-fallo-indice3-14-78k98
+1s          Normal   Completed          job/bordes-fallo-indice3   Job completed

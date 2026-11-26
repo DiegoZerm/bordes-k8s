@@ -1,0 +1,90 @@
+% Preámbulo común para los documentos de apoyo de GreenSense IoT
+% Antes de \input{preambulo} se define \newcommand{\tipodoc}{...}
+
+\usepackage{fontspec}
+\usepackage[spanish,es-tabla,es-nodecimaldot,es-noshorthands]{babel}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\usepackage{microtype}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\emergencystretch=3em
+
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=15pt]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+
+\usepackage[table]{xcolor}
+\definecolor{upqazul}{HTML}{002D72}
+\definecolor{upqrojo}{HTML}{BA0C2F}
+\definecolor{grisborde}{HTML}{8C8C8C}
+\definecolor{grisfondo}{HTML}{F2F2F2}
+
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+
+\captionsetup{font={small},labelfont={bf,color=upqazul},labelsep=period,skip=6pt}
+\setlist{itemsep=0.2em,topsep=0.3em,leftmargin=1.6em}
+\setlist[itemize]{label={\color{upqazul}\small$\bullet$}}
+\setlist[enumerate]{label={\color{upqazul}\arabic*.}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.25}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\needspace{8\baselineskip}\normalfont\Large\bfseries\color{upqazul}}
+  {\thesection.}{0.6em}{}[{\color{upqrojo}\titlerule[0.8pt]}]
+\titleformat{\subsection}
+  {\needspace{5\baselineskip}\normalfont\large\bfseries\color{upqazul}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\needspace{4\baselineskip}\normalfont\normalsize\bfseries\color{upqazul}}
+  {}{0em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.1em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.3em}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{upqazul}Proyecto HPC · Detección de bordes en Kubernetes}
+\fancyhead[R]{\small\color{upqazul}\tipodoc}
+\fancyfoot[C]{\small Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrule}{{\color{upqrojo}\hrule height 0.6pt}}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrule}{}\fancyfoot[C]{\small Página \thepage\ de \pageref{LastPage}}}
+
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\bfseries\color{upqazul}}
+\renewcommand{\cftsecpagefont}{\bfseries\color{upqazul}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftbeforesecskip}{0.45em}
+
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+
+% Recuadros
+\newtcolorbox{recuadro}[1][]{enhanced,colback=grisfondo,colframe=grisfondo,
+  boxrule=0pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,#1}
+\newtcolorbox{recuadroazul}[1]{enhanced,colback=white,colframe=upqazul,
+  boxrule=0.8pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  title={\bfseries #1},coltitle=white,colbacktitle=upqazul,fonttitle=\small}
+
+% Pregunta frecuente: \pregunta{Área}{Pregunta}{Respuesta}
+\newcounter{numpregunta}
+\newcommand{\pregunta}[3]{%
+  \stepcounter{numpregunta}%
+  \needspace{5\baselineskip}%
+  \textbf{\color{upqazul}\thenumpregunta. #2}\hfill{\small\color{grisborde}#1}\par\nopagebreak
+  #3\par\medskip}
